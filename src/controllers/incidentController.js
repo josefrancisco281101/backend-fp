@@ -26,6 +26,19 @@ class IncidentController {
         }
     }
 
+    static async getIncidentsByUser(req, res) {
+        const { user_id } = req.params; 
+        try {
+            const incidents = await Incident.findByUserId(user_id);
+            if (incidents.length === 0) {
+                return res.status(404).json({ message: 'No se encontraron incidencias para este usuario.' });
+            }
+            res.status(200).json(incidents);
+        } catch (error) {
+            console.error('Error al obtener incidencias por usuario:', error);
+            res.status(500).json({ error: 'Error al obtener incidencias por usuario' });
+        }
+    }
     
     static async createIncident(req, res) {
         try {

@@ -15,9 +15,9 @@ class Incident {
             SELECT i.incident_id, i.user_id, i.title, i.type, i.description, i.location, i.image_url, i.status, i.created_at, i.updated_at, u.f_name, u.l_name
             FROM incidents i
             JOIN users u ON i.user_id = u.user_id
-            WHERE i.incident_id = ?
-        `, [id]);
-        return incidents[0];
+            WHERE i.user_id = ?
+        `, [user_id]);
+        return incidents;
     }
     static async findOne (columna, valor) {
         const [incident] = await pool.execute(`SELECT i.incident_id, i.user_id, i.title, i.type, i.description, i.location, i.image_url, i.status, i.created_at, i.updated_at, u.f_name, u.l_name
