@@ -26,17 +26,26 @@ class Incident {
         WHERE ${columna} = ?`, [valor]);
         return incident[0];
     }
+      
+  static async findById(incident_id) {
+    const query = `SELECT * FROM incidents WHERE incident_id = ?`;
+    const [rows] = await pool.execute(query, [incident_id]);
 
-    static async create({ userId, title, type, description, location, imageUrl }) {
-        if (!userId || !title || !type || !description || !location) {
+    if (rows.length === 0) {
+      throw new Error('Incidente no encontrado');
+    }
+
+    return rows[0]; 
+  }
+
+
+    static async create({ userId, title, type, description, location, status, priority }) {
+        if (!userId || !title || !type || !description || !location || !status || !priority) {
             throw new Error('Campos obligatorios faltantess');
         }
-        const [result] = [ userId, title, type, description, location];
-        const camposObligatorios = ['user_id', 'title', 'type', 'description', 'location'];
-        if (imageUrl) {
-            camposObligatorios.push('image_url');
-        result.push(imageUrl);
-    }
+        const result = [ userId, title, type, description, location, status, priority ];
+        const camposObligatorios = ['user_id', 'title', 'type', 'description', 'location', 'status', 'priority'];
+
     const campos = camposObligatorios.join(', ');
     const placeholders = camposObligatorios.map(() => '?').join(', ');
     const query = `INSERT INTO incidents (${campos}) VALUES (${placeholders})`;

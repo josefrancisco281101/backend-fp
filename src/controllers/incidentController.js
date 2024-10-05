@@ -14,7 +14,7 @@ class IncidentController {
     static async getIncidentById(req, res) {
        
                try {
-            const incident = await Incident.findById(req.params.id);
+            const incident = await Incident.findById(req.params.incidet_id);
             console.log(incident)
             if (!incident) {
                 return res.status(404).json({ error: 'Incidencia no encontrada' });
@@ -42,11 +42,12 @@ class IncidentController {
     
     static async createIncident(req, res) {
         try {
-            const { userId, title, type, description, location, imageUrl } = req.body;
-            if (!userId || !title || !type || !description || !location) {
+            const { userId, title, type, description, location, status, priority } = req.body;
+            console.log(req.body)
+            if (!userId || !title || !type || !description || !location || !priority || !status) {
                 return res.status(400).json({ error: 'Campos obligatorios faltantes' });
             }
-            const newIncident = await Incident.create({ userId, title, type, description, location, imageUrl: imageUrl || null });
+            const newIncident = await Incident.create({ userId, title, type, description, location, status, priority });
             res.status(201).json(newIncident);
         } catch (error) {
             console.error('Error al crear la incidencia:', error);

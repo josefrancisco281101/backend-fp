@@ -1,5 +1,8 @@
 import express from 'express';
 import incidentController from '../controllers/incidentController.js';
+// import uploadImage from '../config/multer.js';
+
+// uploadImage.single('image')
 
 const router = express.Router();
 
