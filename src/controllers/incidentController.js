@@ -12,9 +12,11 @@ class IncidentController {
     }
 
     static async getIncidentById(req, res) {
+        const { incident_id } = req.params;
+        console.log(incident_id)
        
                try {
-            const incident = await Incident.findById(req.params.incidet_id);
+            const incident = await Incident.findById(incident_id);
             console.log(incident)
             if (!incident) {
                 return res.status(404).json({ error: 'Incidencia no encontrada' });

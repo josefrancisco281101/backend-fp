@@ -7,7 +7,7 @@ import incidentController from '../controllers/incidentController.js';
 const router = express.Router();
 
 router.get('/', incidentController.getAllIncidents);
-router.get('/:id', incidentController.getIncidentById);
+router.get('/incident/:incident_id', incidentController.getIncidentById);
 router.get('/user/:user_id', incidentController.getIncidentsByUser);
 router.post('/', incidentController.createIncident);
 router.put('/:id', incidentController.updateIncident);

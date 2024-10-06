@@ -26,18 +26,23 @@ class Incident {
         WHERE ${columna} = ?`, [valor]);
         return incident[0];
     }
+    static async findById(incident_id) {
+       
+        const query = `SELECT incident_id, title, type, description, location, status FROM incidents WHERE incident_id = ?`;
+        
+        try {
+          const [rows] = await pool.execute(query, [incident_id]);
       
-  static async findById(incident_id) {
-    const query = `SELECT * FROM incidents WHERE incident_id = ?`;
-    const [rows] = await pool.execute(query, [incident_id]);
-
-    if (rows.length === 0) {
-      throw new Error('Incidente no encontrado');
-    }
-
-    return rows[0]; 
-  }
-
+          if (rows.length === 0) {
+            throw new Error('Incidente no encontrado');
+          }
+      
+          return rows[0];
+        } catch (error) {
+          throw new Error('Error al buscar el incidente: ' + error.message);
+        }
+      }
+      
 
     static async create({ userId, title, type, description, location, status, priority }) {
         if (!userId || !title || !type || !description || !location || !status || !priority) {
