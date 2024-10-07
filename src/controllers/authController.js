@@ -32,10 +32,6 @@ static async me (req, res) {
         
     }
 }
-// static async register() {
-//       const existingUser = await User.findOne('username', username)
-//       if (existingUser) return res.status(400).json({ message: 'El usuario ya existe' })
-// }
 
 }
 

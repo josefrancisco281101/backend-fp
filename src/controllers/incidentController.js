@@ -46,18 +46,17 @@ class IncidentController {
         try {
             const { userId, title, type, description, location, status, priority } = req.body;
             
-            // Verifica si faltan campos obligatorios
             if (!userId || !title || !type || !description || !location || !priority || !status) {
                 return res.status(400).json({ error: 'Campos obligatorios faltantes' });
             }
     
-            // Accede a la imagen subida, si existe
+          
             const image_url = req.file ? req.file.filename : null;
     
-            // Crea la incidencia con los datos
+         
             const newIncident = await Incident.create({ userId, title, type, description, location, status, priority, image_url });
     
-            // Devuelve la respuesta
+            
             res.status(201).json(newIncident);
         } catch (error) {
             console.error('Error al crear la incidencia:', error);
