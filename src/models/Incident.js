@@ -44,12 +44,19 @@ class Incident {
       }
       
 
-    static async create({ userId, title, type, description, location, status, priority }) {
+    static async create({ userId, title, type, description, location, status, priority, image_url }) {
         if (!userId || !title || !type || !description || !location || !status || !priority) {
             throw new Error('Campos obligatorios faltantess');
         }
         const result = [ userId, title, type, description, location, status, priority ];
         const camposObligatorios = ['user_id', 'title', 'type', 'description', 'location', 'status', 'priority'];
+
+
+        if (image_url) {
+            result.push(image_url);
+            camposObligatorios.push('image_url');
+            
+        }
 
     const campos = camposObligatorios.join(', ');
     const placeholders = camposObligatorios.map(() => '?').join(', ');
