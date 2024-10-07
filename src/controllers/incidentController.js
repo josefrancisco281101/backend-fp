@@ -13,11 +13,11 @@ class IncidentController {
 
     static async getIncidentById(req, res) {
         const { incident_id } = req.params;
-        console.log(incident_id)
+       
        
                try {
             const incident = await Incident.findById(incident_id);
-            console.log(incident)
+            
             if (!incident) {
                 return res.status(404).json({ error: 'Incidencia no encontrada' });
             }
@@ -45,7 +45,7 @@ class IncidentController {
     static async createIncident(req, res) {
         try {
             const { userId, title, type, description, location, status, priority } = req.body;
-            console.log(req.body)
+           
             if (!userId || !title || !type || !description || !location || !priority || !status) {
                 return res.status(400).json({ error: 'Campos obligatorios faltantes' });
             }
@@ -58,10 +58,11 @@ class IncidentController {
     }
 
     static async updateIncident(req, res) {
-        const { id } = req.params;
-        const { title, type, description, location, imageUrl, status } = req.body;
+        const { incident_id } = req.params;
+       
+        const { title, type, description, location, status, priority } = req.body;
         try {
-            const result = await Incident.update({ incidentId: id, title, type, description, location, imageUrl, status });
+            const result = await Incident.update({ incidentId: incident_id, title, type, description, location, status, priority });
             if (!result.affectedRows) return res.status(404).json({ message: 'Incidencia no encontrada' });
             res.status(200).json({ message: 'Incidencia actualizada' });
         } catch (error) {

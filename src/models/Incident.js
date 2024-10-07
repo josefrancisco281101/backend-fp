@@ -60,7 +60,7 @@ class Incident {
     return incident;
        
     }
-    static async update({ incidentId, title, type, description, location, imageUrl, status }) {
+    static async update({ incidentId, title, type, description, location, status, priority }) {
         let query = 'UPDATE incidents SET ';
         const camposActualizar = [];
         const valoresActualizar = [];
@@ -85,14 +85,15 @@ class Incident {
             valoresActualizar.push(location);
         }
 
-        if (imageUrl !== undefined) {
-            camposActualizar.push('image_url = ?');
-            valoresActualizar.push(imageUrl);
-        }
-
+     
         if (status !== undefined) {
             camposActualizar.push('status = ?');
             valoresActualizar.push(status);
+        }
+
+        if (priority !== undefined) {
+            camposActualizar.push('priority = ?');
+            valoresActualizar.push(priority);
         }
         if (camposActualizar.length === 0) return null;
 
