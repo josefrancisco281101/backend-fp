@@ -12,7 +12,7 @@ class Incident {
     
     static async findByUserId(user_id) {
         const [incidents] = await pool.execute(`
-            SELECT i.incident_id, i.user_id, i.title, i.type, i.description, i.location, i.image_url, i.status, i.created_at, i.updated_at, u.f_name, u.l_name
+            SELECT i.incident_id, i.user_id, i.title, i.type, i.description, i.location, i.image_url, i.status, i.priority, i.image_url, i.created_at, i.updated_at, u.f_name, u.l_name
             FROM incidents i
             JOIN users u ON i.user_id = u.user_id
             WHERE i.user_id = ?
@@ -28,7 +28,7 @@ class Incident {
     }
     static async findById(incident_id) {
        
-        const query = `SELECT incident_id, title, type, description, location, status FROM incidents WHERE incident_id = ?`;
+        const query = `SELECT incident_id, title, type, description, location, status, priority, image_url FROM incidents WHERE incident_id = ?`;
         
         try {
           const [rows] = await pool.execute(query, [incident_id]);

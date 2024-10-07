@@ -69,6 +69,7 @@ class IncidentController {
         const { incident_id } = req.params;
        
         const { title, type, description, location, status, priority } = req.body;
+        console.log(req.body)
         try {
             const result = await Incident.update({ incidentId: incident_id, title, type, description, location, status, priority });
             if (!result.affectedRows) return res.status(404).json({ message: 'Incidencia no encontrada' });
