@@ -103,8 +103,8 @@ class Incident {
         const [result] = await pool.execute(query, valoresActualizar);
         return result;
     }
-    static async deleteById(id) {
-        const [result] = await pool.execute('DELETE FROM incidents WHERE incident_id = ?', [id]);
+    static async deleteById(incident_id) {
+        const [result] = await pool.execute('DELETE FROM incidents WHERE incident_id = ?', [incident_id]);
         return result;
     }
 

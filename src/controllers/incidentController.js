@@ -72,9 +72,9 @@ class IncidentController {
     }
 
     static async deleteIncident(req, res) {
-        const { id } = req.params;
+        const { incident_id } = req.params;
         try {
-            const result = await Incident.deleteById(id);
+            const result = await Incident.deleteById(incident_id);
             if (!result.affectedRows) return res.status(404).json({ message: 'Incidencia no encontrada' });
             res.status(200).json({ message: 'Incidencia eliminada' });
         } catch (error) {

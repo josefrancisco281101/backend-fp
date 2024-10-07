@@ -12,6 +12,6 @@ router.get('/incident/:incident_id', incidentController.getIncidentById);
 router.get('/user/:user_id', validateCORS, incidentController.getIncidentsByUser);
 router.post('/', incidentController.createIncident);
 router.put('/incident/:incident_id', incidentController.updateIncident);
-router.delete('/:id', incidentController.deleteIncident);
+router.delete('/incident/:incident_id', incidentController.deleteIncident);
 
 export default router;
