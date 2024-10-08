@@ -22,12 +22,14 @@ class User {
       throw new Error('Campos obligatorios faltantes');
     }
         const encriptada = await bcrypt.hash(password, 10);
-        const [result] =  [fName, lName, username, email, encriptada, role];
+        const result =  [fName, lName, username, email, encriptada, role];
 
-    const camposObligatorios = ['f_name', 'l_name', 'username', 'email', 'password'];
+    const camposObligatorios = ['f_name', 'l_name', 'username', 'email', 'password, role'];
+    
     if (image) {
+      result.push(image);
         camposObligatorios.push('image');
-       result.push(image);
+       
     }
     const campos = camposObligatorios.join(', ');
     const placeholders = camposObligatorios.map(() => '?').join(', ');
