@@ -23,12 +23,13 @@ class UserController {
       }
 
       static async store (req, res) {
-        console.log(req.body)
+      
         try {
             const { fName, lName, username, email, password, role } = req.body
             if (!fName || !lName || !username || !email || !password || !role) return res.status(400).json({ message: 'Faltan datos' })
                
-            const image = req.file ? req.file.filename : null
+                const image_url = req.file ? req.file.filename : null;
+          
             
             const user = await User.create({
                 fName,
@@ -36,7 +37,7 @@ class UserController {
                 username,
                 email,
                 password,
-                image,
+                image_url,
                 role
             })
             res.status(201).json({ message: 'Usuario creado', data: user })
@@ -67,7 +68,7 @@ static async delete (req,res) {
                     username,
                     email,
                     password,
-                    image,
+                    image_url,
                     role
                 } = req.body
     if (!fName || !lName || !username || !email || !password || !role) return res.status(400).json({ message: 'Faltan datos' })
@@ -79,7 +80,7 @@ static async delete (req,res) {
             username,
             email,
             password,
-            image
+            image_url
         })
 
         if (resultado.affectedRows === 0) return res.status(400).json({ message: 'No se pudo actualizar el usuario' })
@@ -102,7 +103,7 @@ static async delete (req,res) {
                     username,
                     email,
                     password,
-                    image,
+                    image_url,
                     role
                 } = req.body
 
@@ -113,7 +114,7 @@ static async delete (req,res) {
                     username,
                     email,
                     password,
-                    image,
+                    image_url,
                     role
                 })
                 if (!resultado) return res.status(400).json({ message: 'No se enviaron datos para la actualización' })

@@ -3,22 +3,23 @@ import bcrypt from 'bcrypt';
 
 class User {
     static async all () {
-        const [Users] = await pool.execute('SELECT user_id, f_name, l_name, username, email, image, role FROM users');
+        const [Users] = await pool.execute('SELECT user_id, f_name, l_name, username, email, image_url, role FROM users');
         return Users;
     }
     static async findById (id) {
-        const [Users] = await pool.execute('SELECT user_id, f_name, l_name, username, email, image, role, password FROM users WHERE user_id = ?', [id]);
+        const [Users] = await pool.execute('SELECT user_id, f_name, l_name, username, email, image_url, role, password FROM users WHERE user_id = ?', [id]);
         return Users[0];
     }
 
     static async findOne (columna, valor) {
-        const [user] = await pool.execute(`SELECT user_id, f_name, l_name, username, email, image, role, password FROM users WHERE ${columna} = ?`, [valor]);
+        const [user] = await pool.execute(`SELECT user_id, f_name, l_name, username, email, image_url, role, password FROM users WHERE ${columna} = ?`, [valor]);
         console.log(user)
         return user[0];
     }
     
-  static async create({ fName, lName, username, email, password, image, role}) {
+  static async create({ fName, lName, username, email, password, image_url, role}) {
 
+   
    
     if (!fName || !lName || !username || !email || !password || !role) {
       throw new Error('Campos obligatorios faltantes');
@@ -30,11 +31,13 @@ class User {
     const camposObligatorios = ['f_name', 'l_name', 'username', 'email', 'password', 'role'];
     
     
-    if (image) {
-      result.push(image);
-        camposObligatorios.push('image');
+    if (image_url) {
+      result.push(image_url);
+        camposObligatorios.push('image_url');
        
     }
+
+   
     const campos = camposObligatorios.join(', ');
     const placeholders = camposObligatorios.map(() => '?').join(', ');
 
@@ -67,7 +70,7 @@ class User {
     username,
     email,
     password,
-    image,
+    image_url,
     role
   }) {
     let query = 'UPDATE users SET ';
@@ -104,9 +107,9 @@ class User {
         valoresActualizar.push(role || null);
     }
 
-   if (image !== undefined) {
-      camposActualizar.push('image = ?')
-      valoresActualizar.push(image || null)
+   if (image_url !== undefined) {
+      camposActualizar.push('image_url = ?')
+      valoresActualizar.push(image_url || null)
     }
 
     if (camposActualizar.length === 0) return null
