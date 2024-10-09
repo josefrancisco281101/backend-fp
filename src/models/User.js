@@ -18,13 +18,17 @@ class User {
     }
     
   static async create({ fName, lName, username, email, password, image, role}) {
+
+   
     if (!fName || !lName || !username || !email || !password || !role) {
       throw new Error('Campos obligatorios faltantes');
     }
         const encriptada = await bcrypt.hash(password, 10);
         const result =  [fName, lName, username, email, encriptada, role];
+        
 
-    const camposObligatorios = ['f_name', 'l_name', 'username', 'email', 'password, role'];
+    const camposObligatorios = ['f_name', 'l_name', 'username', 'email', 'password', 'role'];
+    
     
     if (image) {
       result.push(image);
@@ -35,9 +39,13 @@ class User {
     const placeholders = camposObligatorios.map(() => '?').join(', ');
 
     const query = `INSERT INTO users (${campos}) VALUES (${placeholders})`;
+
+
     const [newUser] = await pool.execute(query, result);
+ 
 
     const user = await this.findById(newUser.insertId);
+   
 
     delete user.password;
     return user;

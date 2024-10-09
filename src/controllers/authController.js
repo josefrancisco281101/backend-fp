@@ -33,6 +33,28 @@ static async me (req, res) {
     }
 }
 
+static async register (req, res) {
+
+    // console.log(req.body)
+
+
+    try {
+        const {fName, lName, username, email, password, role, image} = req.body;
+
+        if (!fName || !lName || !username || !email || !password || !role) return res.status(400).json({ message: 'Faltan datos' });
+
+        // const image = req.file ? req.file.filename : null
+
+        const user = await User.create({fName, lName, username, email, password, image, role});
+
+        console.log(user)
+        delete user.password;
+        res.status(201).json({message: 'Usuario creado', data: user});
+    } catch (error) {
+        res.status(500).json({message: error.message})
+    }
+}
+
 }
 
 export default AuthController

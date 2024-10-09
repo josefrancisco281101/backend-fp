@@ -25,9 +25,11 @@ class UserController {
       static async store (req, res) {
         console.log(req.body)
         try {
-            const { fName, lName, username, email, password, image, role } = req.body
+            const { fName, lName, username, email, password, role } = req.body
             if (!fName || !lName || !username || !email || !password || !role) return res.status(400).json({ message: 'Faltan datos' })
-                
+               
+            const image = req.file ? req.file.filename : null
+            
             const user = await User.create({
                 fName,
                 lName,
